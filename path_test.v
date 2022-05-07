@@ -25,20 +25,26 @@ fn test_clean_path() {
 
 fn test_is_abs() {
 	if is_win {
-		assert is_abs('/path\\to\\file.v ')
-		assert !is_abs('path\\to\\file.v ')
-		assert !is_abs('D:path/to/file.v ')
-		assert is_abs('C:\\path/to/file.v ')
-		assert is_abs(r'\\?\Device\path\to\file.v ')
+		assert is_abs('/path\\to\\file.v')
+		assert !is_abs('path\\to\\file.v')
+		assert !is_abs('D:path/to/file.v')
+		assert is_abs('C:\\path/to/file.v')
+		assert is_abs(r'\\?\Device\path\to\file.v')
 		assert !is_abs(r'\\?\')
 		assert !is_abs(r'\\.')
-		assert is_abs(r'\\Host\Share\path\to\file.v ')
-		assert !is_abs(r'\\Host\Share')
+		assert !is_abs(r'\\.\\\\')
+		assert is_abs(r'\\Host\Share\path\to\file.v')
+		assert is_abs(r'\\Host\Share')
+		assert !is_abs(r'\\Host\')
+		assert !is_abs('')
+		assert is_abs('/')
 		return
 	}
-	assert is_abs('/path/to/file.v ')
-	assert !is_abs('\\path/to/file.v ')
-	assert is_abs('/path/to/dir ')
+	assert is_abs('/path/to/file.v')
+	assert !is_abs('\\path/to/file.v')
+	assert is_abs('/path/to/dir')
+	assert !is_abs('')
+	assert !is_abs('\\')
 }
 
 fn test_norm_path() {
