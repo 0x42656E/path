@@ -91,22 +91,14 @@ pub fn norm_path(path string) string {
 
 // is_abs returns `true` if the given `path` is absolute.
 pub fn is_abs(path string) bool {
-	plen := path.len
-	if plen == 0 { return false }
+	if path.len == 0 { return false }
+	starts_w_sep := is_sep(path[0])
 	if is_win {
-		if win_drive_len(path) >= 5 
-		&& is_sep(path[0]) 
-		&& is_sep(path[1]) {
-			return true
-		}
-		if plen >= 3 
-		&& has_win_drive_letter(path) 
-		&& is_sep(path[2]) {
-			return true
-		}
-		return false
+		return is_unc_path(path) 
+		|| win_drive_rooted(path)
+		|| starts_w_sep
 	}
-	return is_sep(path[0])
+	return starts_w_sep
 }
 
 // clean_path "cleans" the path by turning forward slashes
@@ -162,4 +154,16 @@ fn to_bslashes(s string) string {
 
 fn is_sep(b u8) bool {
 	return b == fslash || (is_win && b == bslash)
+}
+
+fn is_unc_path(path string) bool {
+	if path.len < 5 { return false }
+	return win_drive_len(path) >= 5 
+	&& is_sep(path[0]) 
+	&& is_sep(path[1]) 
+}
+
+fn win_drive_rooted(path string) bool {
+	if path.len < 3 { return false }
+	return has_win_drive_letter(path) && is_sep(path[2])
 }
