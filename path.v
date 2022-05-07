@@ -92,13 +92,21 @@ pub fn norm_path(path string) string {
 // is_abs returns `true` if the given `path` is absolute.
 pub fn is_abs(path string) bool {
 	plen := path.len
-	if plen == 0 { 
-		return false 
+	if plen == 0 { return false }
+	if is_win {
+		if win_drive_len(path) >= 5 
+		&& is_sep(path[0]) 
+		&& is_sep(path[1]) {
+			return true
+		}
+		if plen >= 3 
+		&& has_win_drive_letter(path) 
+		&& is_sep(path[2]) {
+			return true
+		}
+		return false
 	}
-	if is_win && win_drive_len(path) >= 5 {
-		return true
-	}
-	return os.is_abs_path(path)
+	return is_sep(path[0])
 }
 
 // clean_path "cleans" the path by turning forward slashes
