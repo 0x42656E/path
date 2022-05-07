@@ -22,7 +22,6 @@ fn test_clean_path() {
 	assert clean_path(path5) == r'/'
 }
 
-
 fn test_is_abs() {
 	if is_win {
 		assert is_abs('/path\\to\\file.v')
