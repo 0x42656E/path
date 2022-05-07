@@ -96,7 +96,7 @@ pub fn is_abs(path string) bool {
 	if is_win {
 		return is_unc_path(path) 
 		|| win_drive_rooted(path)
-		|| starts_w_sep
+		|| (starts_w_sep && path.len >= 2 && !is_sep(path[1]))
 	}
 	return starts_w_sep
 }
