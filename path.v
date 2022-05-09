@@ -38,11 +38,7 @@ pub fn norm_path(path string) string {
 	}
 	spath := cpath.split(sep)
 	if dot_dot !in spath {
-		return if head_len != 0 { 
-			head + cpath 
-		} else { 
-			cpath 
-		}
+		return if head_len != 0 { head + cpath } else { cpath }
 	}
 	// resolve backlinks (..)
 	spath_len := spath.len 
@@ -182,6 +178,5 @@ fn win_drive_rooted(path string) bool {
 fn win_rooted(path string) bool {
 	plen := path.len
 	if plen == 0 { return false }
-	return is_sep(path[0]) 
-	&& (plen == 1 || (plen >= 2 && !is_sep(path[1])))
+	return is_sep(path[0]) && (plen == 1 || (plen >= 2 && !is_sep(path[1])))
 }
