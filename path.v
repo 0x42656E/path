@@ -100,6 +100,18 @@ pub fn is_abs(path string) bool {
 	return is_sep(path[0])
 }
 
+// `abs_path` joins the current working directory 
+// with the passed `path` (if the `path` is relative)
+// and returns the absolute path representation. 
+pub fn abs_path(path string) string {
+	wd := os.getwd()
+	return match true {
+		path.len == 0 { wd }
+		is_abs(path) { norm_path(path) }
+		else { norm_path(wd + sep + path) }  
+	}
+}
+
 // clean_path "cleans" the path by turning forward slashes
 // into back slashes on a Windows system and eliminating:
 // - references to current (.) directories
