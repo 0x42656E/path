@@ -1,5 +1,7 @@
 module path
 
+import os
+
 fn test_clean_path() {
 	path1 := '//././../path/to/./file.v/.'
 	path2 := 'path/to/./file.v/.'
@@ -72,4 +74,29 @@ fn test_norm_path() {
 	assert norm_path('/../dir/..') == '/'
 	assert norm_path('//././dir/../files/././/file.v') == '/files/file.v'
 	assert norm_path('/\\../dir/////////.') == '/\\../dir'
+}
+
+fn test_abs_path() {
+	wd := os.getwd()
+	wd_w_sep := wd + sep
+	if is_win {
+		assert abs_path('path/to/file.v') == r'${wd_w_sep}path\to\file.v'
+		assert abs_path('path/to/file.v') == r'${wd_w_sep}path\to\file.v'
+		assert abs_path('/') == '\\'
+		assert abs_path('files') == '${wd_w_sep}files'
+		assert abs_path('') == wd
+		assert abs_path('files/../file.v') == '${wd_w_sep}file.v'
+		assert abs_path('///') == '\\'
+		assert abs_path('/path/to/file.v') == r'\path\to\file.v'
+		assert abs_path('/') == '\\'
+		return
+	}
+	assert abs_path('/') == '/'
+	assert abs_path('.') == wd
+	assert abs_path('files') == '${wd_w_sep}files'
+	assert abs_path('') == wd
+	assert abs_path('files/../file.v') == '${wd_w_sep}file.v'
+	assert abs_path('///') == '/'
+	assert abs_path('/path/to/file.v') == '/path/to/file.v'
+	assert abs_path('/path/to/file.v/../..') == '/path'
 }
