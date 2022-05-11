@@ -101,11 +101,16 @@ pub fn is_abs(path string) bool {
 // and returns the absolute path representation. 
 pub fn abs_path(path string) string {
 	wd := os.getwd()
-	return match true {
-		path.len == 0 { wd }
-		is_abs(path) { norm_path(path) }
-		else { norm_path(wd + sep + path) }  
+	if path.len == 0 { return wd }
+	npath := norm_path(path)
+	if !is_abs(npath) {
+		mut sb := strings.new_builder(path.len)
+		sb.write_string(wd)
+		sb.write_string(sep)
+		sb.write_string(npath)
+		return sb.str()
 	}
+	return npath
 }
 
 // clean_path "cleans" the path by turning forward slashes
