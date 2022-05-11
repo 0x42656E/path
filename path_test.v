@@ -80,8 +80,8 @@ fn test_abs_path() {
 	wd := os.getwd()
 	wd_w_sep := wd + sep
 	if is_win {
-		assert abs_path('path/to/file.v') == r'${wd_w_sep}path\to\file.v'
-		assert abs_path('path/to/file.v') == r'${wd_w_sep}path\to\file.v'
+		assert abs_path('path/to/file.v') == '${wd_w_sep}path\\to\\file.v'
+		assert abs_path('path/to/file.v') == '${wd_w_sep}path\\to\\file.v'
 		assert abs_path('/') == '\\'
 		assert abs_path('files') == '${wd_w_sep}files'
 		assert abs_path('') == wd
