@@ -147,11 +147,7 @@ fn clean_path(path string) string {
 // get_os_sep returns the path separator
 // based on the current operating system.
 fn get_os_sep() string {
-	return if is_win {
-		bslash.str() 
-	} else { 
-		fslash.str() 
-	}
+	return if is_win { bslash.str() } else { fslash.str() }
 }
 
 fn to_bslashes(s string) string {
@@ -165,9 +161,7 @@ fn is_sep(b u8) bool {
 
 fn is_unc_path(path string) bool {
 	if path.len < 5 { return false }
-	return win_drive_len(path) >= 5 
-	&& is_sep(path[0]) 
-	&& is_sep(path[1]) 
+	return win_drive_len(path) >= 5 && is_sep(path[0]) && is_sep(path[1]) 
 }
 
 fn win_drive_rooted(path string) bool {
