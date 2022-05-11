@@ -110,7 +110,7 @@ pub fn abs_path(path string) string {
 		sb.write_string(wd)
 		sb.write_string(sep)
 		sb.write_string(npath)
-		return sb.str()
+		return norm_path(sb.str())
 	}
 	return npath
 }
