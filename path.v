@@ -12,6 +12,7 @@ const (
 	fslash = `/`
 	bslash = `\\`
 	dot =  `.`
+	dot_str = '.'
 	dot_dot = '..'
 	empty = ''
 )
@@ -103,6 +104,7 @@ pub fn abs_path(path string) string {
 	wd := os.getwd()
 	if path.len == 0 { return wd }
 	npath := norm_path(path)
+	if npath == dot_str { return wd }
 	if !is_abs(npath) {
 		mut sb := strings.new_builder(path.len)
 		sb.write_string(wd)
