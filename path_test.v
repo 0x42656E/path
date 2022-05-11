@@ -63,6 +63,11 @@ fn test_norm_path() {
 		assert norm_path(r'G:\..\..\.\.\file.v\\\.') == r'G:\file.v'
 		assert norm_path(r'\\Server\share\\\dir/..\file.v\./.') == r'\\Server\share\file.v'
 		assert norm_path(r'\\.\device\\\dir/to/./file.v\.') == r'\\.\device\dir\to\file.v'
+		assert norm_path(r'\\') == '\\'
+		assert norm_path(r'//') == '\\'
+		assert norm_path(r'\\\') == '\\'
+		assert norm_path(r'.') == '.'
+		assert norm_path(r'\\Server\') == '\\Server'
 		return
 	}
 	assert norm_path('/path/././../to/file//file.v/.') == '/to/file/file.v'
