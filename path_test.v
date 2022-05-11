@@ -99,4 +99,6 @@ fn test_abs_path() {
 	assert abs_path('///') == '/'
 	assert abs_path('/path/to/file.v') == '/path/to/file.v'
 	assert abs_path('/path/to/file.v/../..') == '/path'
+	assert abs_path('path/../file.v/..') == wd
+	assert abs_path('///') == '/'
 }
